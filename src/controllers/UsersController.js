@@ -1,6 +1,6 @@
 const {UsersServices} = require('../services');
 const userServices = new UsersServices();
-const auth = require('../auth');
+const Auth = require('../auth');
 class UserController {
   static async getAllUsers(_req, res) {
     try {
@@ -28,7 +28,7 @@ class UserController {
     const data = req.body;
 
     try {
-      const passwordHashed = await auth.generateHashPassword(data.password);
+      const passwordHashed = await Auth.generateHashPassword(data.password);
 
       const userData = {email: data.email, password: passwordHashed};
 
