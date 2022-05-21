@@ -1,8 +1,8 @@
 const express = require('express');
 const dotenv = require('dotenv');
 const routes = require('./routes');
-require('./auth/passports/local');
-
+require('./auth/passports');
+require('./auth/redis/blacklist/blacklist-config');
 dotenv.config();
 
 const app = express();
