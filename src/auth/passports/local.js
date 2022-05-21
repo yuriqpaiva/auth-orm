@@ -3,10 +3,11 @@ const {Strategy} = require('passport-local');
 const {UsersServices} = require('../../services/index');
 const userServices = new UsersServices();
 const bcrypt = require('bcrypt');
+const {InvalidArgument, NotFound} = require('../../errors');
 
 const verifyUser = async (user) => {
   if (!user) {
-    throw new Error('E-mail does not exists');
+    throw new NotFound('E-mail does not exists');
   }
 };
 
@@ -17,7 +18,7 @@ const verifyPassword = async (requestPassword, databasePassword) => {
   );
 
   if (!isPasswordValid) {
-    throw new Error('E-mail or password invalid');
+    throw new InvalidArgument('E-mail or password invalid');
   }
 };
 
