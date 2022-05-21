@@ -12,7 +12,7 @@ class UserController {
     }
   }
 
-  static async getOneUser(req, res) {
+  static async getOneUserById(req, res) {
     const {id} = req.params;
 
     try {
