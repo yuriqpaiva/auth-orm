@@ -1,10 +1,11 @@
-# Auth-ORM &middot; ![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg) ![language](https://img.shields.io/badge/language-javascript-yellow)
+# Auth-ORM &middot; ![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg) ![language](https://img.shields.io/badge/language-javascript-yellow)  ![storage](https://img.shields.io/badge/storage-redis-red)
 
 ## 💡 Introduction
 
 Project created aiming a basic structure of a authentication API system:
 
 - Login with JWT Tokens
+- Refresh Tokens
 - Logout with a Blacklist using Redis
 - Secure API routes
 - Expire tokens
