@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 const redisManipulation = require('./redis-manipulation');
 const {createHash} = require('crypto');
 
-const blocklist = redis.createClient({prefix: 'blocklist:'});
+const blocklist = redis.createClient({prefix: 'blocklist-access-token:'});
 
 const blocklistManipulation = redisManipulation(blocklist);
 
