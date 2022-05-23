@@ -1,6 +1,6 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const blacklist = require('./redis/blacklist/blacklist-manipulation');
+const blocklist = require('./redis/blocklist');
 class Auth {
   static async generateHashPassword(password) {
     const hashCost = 12;
@@ -26,7 +26,7 @@ class Auth {
   static async logout(req, res) {
     try {
       const token = req.token;
-      await blacklist.add(token);
+      await blocklist.add(token);
       return res.status(204).send();
     } catch (error) {
       return res.status(500).json({message: error.message});
