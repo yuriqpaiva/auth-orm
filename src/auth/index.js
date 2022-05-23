@@ -1,9 +1,5 @@
 const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
-const blocklist = require('./redis/blocklistAccessToken');
-const {randomBytes} = require('crypto');
-const moment = require('moment');
-const allowList = require('./redis/allowlistRefreshToken');
+const {accessToken, refresh} = require('./tokens');
 
 class Auth {
   static async generateHashPassword(password) {
@@ -11,24 +7,12 @@ class Auth {
     return bcrypt.hash(password, hashCost);
   }
 
-  static async generateRefreshToken(id) {
-    const refreshToken = randomBytes(24).toString('hex');
-    const expirationDate = moment().add(5, 'd').unix();
-
-    await allowList.add(refreshToken, id, expirationDate);
-
-    return refreshToken;
-  }
-
   static async login(req, res) {
     const {id} = req.user;
 
     try {
-      const payload = {id};
-      const token = jwt.sign(payload, process.env.JWT_SECRET, {
-        expiresIn: '15m',
-      });
-      const refreshToken = await Auth.generateRefreshToken(id);
+      const token = accessToken.createJWT(id);
+      const refreshToken = await refresh.createOpaqueToken(id);
 
       res.set('Authorization', token);
       return res.status(200).json({refreshToken});
@@ -40,7 +24,7 @@ class Auth {
   static async logout(req, res) {
     try {
       const token = req.token;
-      await blocklist.add(token);
+      await accessToken.invalidateJWT(token);
       return res.status(204).send();
     } catch (error) {
       return res.status(500).json({message: error.message});

@@ -1,15 +1,15 @@
-const allowListRefreshToken = require('../redis/allowlistRefreshToken');
 const UsersServices = require('../../services/UsersServices');
 const userServices = new UsersServices();
 const {InvalidArgument} = require('../../errors');
+const {refresh} = require('../tokens/index');
 
 module.exports = async (req, res, next) => {
   try {
     const {refreshToken} = req.body;
 
-    const id = await allowListRefreshToken.getValue(refreshToken);
+    const id = await refresh.getOpaqueTokenValue(refreshToken);
 
-    await allowListRefreshToken.deleteValue(refreshToken);
+    await refresh.deleteOpaqueToken(refreshToken);
     req.user = await userServices.getOneRegister(id);
 
     if (!id) {
