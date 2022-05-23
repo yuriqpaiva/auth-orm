@@ -41,13 +41,13 @@ Project created aiming a basic structure of a authentication API system:
 ### Using NPM:
 
 ```
-  npm run dev
+  npm start
 ```
 
 ### Using Yarn:
 
 ```
-  yarn run dev
+  yarn start
 ```
 
 <br/>
