@@ -2,7 +2,7 @@ const express = require('express');
 const dotenv = require('dotenv');
 const routes = require('./routes');
 require('./auth/passports');
-require('./auth/redis/blocklist');
+require('./auth/redis/blocklistAccessToken');
 dotenv.config();
 
 const app = express();

@@ -1,9 +1,9 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const blocklist = require('./redis/blocklist');
+const blocklist = require('./redis/blocklistAccessToken');
 const {randomBytes} = require('crypto');
 const moment = require('moment');
-const allowList = require('./redis/allowlist');
+const allowList = require('./redis/allowlistRefreshToken');
 
 class Auth {
   static async generateHashPassword(password) {

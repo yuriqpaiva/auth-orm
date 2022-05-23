@@ -3,11 +3,11 @@ const {Strategy} = require('passport-http-bearer');
 const jwt = require('jsonwebtoken');
 const {UsersServices} = require('../../services/');
 const userServices = new UsersServices();
-const blocklist = require('../redis/blocklist');
+const blocklistAccessToken = require('../redis/blocklistAccessToken');
 const {InvalidTokenByLogout} = require('../../errors');
 
 const verifyTokenOnBlacklist = async (token) => {
-  const invalidToken = await blocklist.hasToken(token);
+  const invalidToken = await blocklistAccessToken.hasToken(token);
 
   if (invalidToken) {
     throw new InvalidTokenByLogout('Token invalidated by logout');
