@@ -1,31 +1,63 @@
 const nodemailer = require('nodemailer');
 
-const defineVerifyEmailAddress = (token, route) => {
-  return `${process.env.BASE_URL}/${route}/${token}`;
-};
+class Mail {
+  constructor(user) {
+    this.user = user;
+  }
 
-const sendMail = async (user, token) => {
-  const account = await nodemailer.createTestAccount();
+  async defineTransporterConfig() {
+    if (process.env.NODE_ENV === 'production') {
+      return {
+        host: process.env.EMAIL_HOST,
+        auth: {
+          user: process.env.EMAIL_NAME,
+          password: process.env.PASSWORD_NAME,
+        },
+        secure: true,
+      };
+    } else {
+      const testAccount = await nodemailer.createTestAccount();
 
-  const transporter = await nodemailer.createTransport({
-    host: 'smtp.ethereal.email',
-    auth: account,
-  });
+      return {
+        host: 'smtp.ethereal.email',
+        auth: testAccount,
+      };
+    }
+  }
 
-  const verifyEmailAddress = defineVerifyEmailAddress(
-      token,
-      'users/verifyEmail',
-  );
+  async sendMail() {
+    const transporterConfig = await this.defineTransporterConfig();
 
-  const infos = await transporter.sendMail({
-    from: 'Auth-ORM <noreplyauthorm@auth.com.br>',
-    to: user.email,
-    subject: 'E-mail verification',
-    text: `Hey! Please verify your e-mail here: ${verifyEmailAddress}`,
-    html: `<h1>Hey!</h1> <p>Please verify your e-mail here:<a href="${verifyEmailAddress}">${verifyEmailAddress}</a></p>`,
-  });
+    const transporter = await nodemailer.createTransport(transporterConfig);
 
-  console.log('URL: ' + nodemailer.getTestMessageUrl(infos));
-};
+    const infos = await transporter.sendMail(this.emailConfig);
 
-module.exports = sendMail;
+    if (process.env.NODE_ENV !== 'production') {
+      console.log('URL: ' + nodemailer.getTestMessageUrl(infos));
+    }
+  }
+}
+
+class VerificationMail extends Mail {
+  constructor(user, token) {
+    super(user);
+    this.verifyEmailAddress = this.defineVerifyEmailAddress(
+        token,
+        'users/verifyEmail',
+    );
+
+    this.emailConfig = {
+      from: 'Auth-ORM <noreplyauthorm@auth.com.br>',
+      to: this.user.email,
+      subject: 'E-mail verification',
+      text: `Hey! Please verify your e-mail here: ${this.verifyEmailAddress}`,
+      html: `<h1>Hey!</h1> <p>Please verify your e-mail here:<a href="${this.verifyEmailAddress}">${this.verifyEmailAddress}</a></p>`,
+    };
+  }
+
+  defineVerifyEmailAddress(token, route) {
+    return `${process.env.BASE_URL}/${route}/${token}`;
+  }
+}
+
+module.exports = {VerificationMail};

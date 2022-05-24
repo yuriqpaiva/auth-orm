@@ -3,7 +3,7 @@ const userServices = new UsersServices();
 const Auth = require('../auth');
 const {emailToken} = require('../auth/tokens');
 
-const sendMail = require('../email/Mail');
+const {VerificationMail} = require('../email/Mail');
 class UserController {
   static async getAllUsers(_req, res) {
     try {
@@ -43,7 +43,7 @@ class UserController {
 
       const addressToken = emailToken.createJWT(createdUser.id);
 
-      sendMail(createdUser, addressToken);
+      new VerificationMail(createdUser, addressToken).sendMail();
 
       return res.status(200).json(createdUser);
     } catch (error) {

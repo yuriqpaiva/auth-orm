@@ -9,6 +9,7 @@ Project created aiming a basic structure of a authentication API system:
 - Logout with a Blacklist using Redis
 - Secure API routes
 - Expire tokens
+- Verification Mail on user register
 
 <br/>
 
@@ -16,7 +17,7 @@ Project created aiming a basic structure of a authentication API system:
 
 - NodeJS
 - Redis
-- SQL database
+- SQL Database compatible with Sequelize
 
 <br/>
 
@@ -56,11 +57,20 @@ Project created aiming a basic structure of a authentication API system:
 That's how your ```.env```  file should look like:
 ```js
 APP_PORT=3000
-JWT_SECRET="jwt-password"
+BASE_URL="localhost:3000"
+
+JWT_SECRET="secret-password"
+
 DB_USERNAME="postgres"
 DB_PASSWORD="postgres"
 DB_HOST="localhost"
 DB_DIALECT="postgresql"
+
+NODE_ENV="development"
+
+EMAIL_HOST="smtp.gmail.com"
+EMAIL_NAME="test@email.com"
+EMAIL_PASSWORD="test"
 ```
 <br/>
 
