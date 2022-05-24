@@ -1,6 +1,9 @@
 const {UsersServices} = require('../services');
 const userServices = new UsersServices();
 const Auth = require('../auth');
+const {emailToken} = require('../auth/tokens');
+
+const sendMail = require('../email/Mail');
 class UserController {
   static async getAllUsers(_req, res) {
     try {
@@ -30,9 +33,17 @@ class UserController {
     try {
       const passwordHashed = await Auth.generateHashPassword(data.password);
 
-      const userData = {email: data.email, password: passwordHashed};
+      const userData = {
+        email: data.email,
+        password: passwordHashed,
+        verified: false,
+      };
 
       const createdUser = await userServices.createRegister(userData);
+
+      const addressToken = emailToken.createJWT(createdUser.id);
+
+      sendMail(createdUser, addressToken);
 
       return res.status(200).json(createdUser);
     } catch (error) {

@@ -21,7 +21,10 @@ class Token {
   }
 
   async verifyTokenJWT(token) {
-    await this.verifyTokenOnBlocklist(token);
+    if (this.redisList) {
+      await this.verifyTokenOnBlocklist(token);
+    }
+
     const {id} = jwt.verify(token, process.env.JWT_SECRET);
 
     return id;
@@ -67,5 +70,6 @@ class Token {
 
 const accessToken = new Token('access token', blocklistAccessToken, [15, 'm']);
 const refresh = new Token('refresh token', allowListAccessToken, [5, 'd']);
+const emailToken = new Token('email token', null, [1, 'h']);
 
-module.exports = {accessToken, refresh};
+module.exports = {accessToken, refresh, emailToken};

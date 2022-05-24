@@ -9,6 +9,10 @@ class UserServices extends Services {
   async getUserByEmail(email) {
     return database[this.modelName].findOne({where: {email}});
   }
+
+  async verifyUser(id) {
+    this.updateRegister({verified: true}, id);
+  }
 }
 
 module.exports = UserServices;
