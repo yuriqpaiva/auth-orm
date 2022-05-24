@@ -53,7 +53,7 @@ Project created aiming a basic structure of a authentication API system:
 
 <br/>
 
-## Environment Variables
+## ⚙️ Environment Variables
 That's how your ```.env```  file should look like:
 ```js
 APP_PORT=3000
