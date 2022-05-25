@@ -155,6 +155,152 @@
             }
           }
         }
+      },
+      "delete": {
+        "description": "Delete a user",
+        "summary": "Delete a user",
+        "tags": ["Users"],
+        "security": [{"accessToken": [], "refreshToken": []}],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "User ID to delete",
+            "required": true
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "User were deleted"
+          }
+        }
+      }
+    },
+    "/users/updateAccessToken": {
+      "post": {
+        "description": "Update Access Token",
+        "summary": "Receives Refresh Token and returns Access and a new Refresh",
+        "tags": ["Auth"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "refreshToken": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "headers": {
+              "Authorization": {
+                "description": "Access Token",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "refreshToken": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/login": {
+      "post": {
+        "description": "Authenticates a user",
+        "summary": "Returns Access Token and Refresh Token",
+        "tags": ["Auth"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  }
+                }
+              },
+              "examples": {
+                "user": {
+                  "value": {
+                    "email": "newtestmail@email.com",
+                    "password": "123456"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "User were authenticated",
+            "headers": {
+              "Authorization": {
+                "description": "Access Token",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "refreshToken": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/logout": {
+      "post": {
+        "description": "User logout",
+        "summary": "Removes Access Token and Refresh Token",
+        "tags": ["Auth"],
+        "security": [{"accessToken": [], "refreshToken": []}],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "refreshToken": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "Logout performed"
+          }
+        }
       }
     }
   },
@@ -185,10 +331,15 @@
       }
     },
     "securitySchemes": {
-      "bearerAuth": {
+      "accessToken": {
         "type": "http",
         "scheme": "bearer",
         "bearerFormat": "JWT"
+      },
+      "refreshToken": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "refresh"
       }
     }
   }
