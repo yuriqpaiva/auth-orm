@@ -6,7 +6,7 @@ const {local, bearer, refresh, email} = require('../auth/middlewares');
 const route = Router();
 
 route
-    .get('/logout', bearer, Auth.logout)
+    .post('/logout', [refresh, bearer], Auth.logout)
     .get('/users', UsersController.getAllUsers)
     .get('/users/:id', UsersController.getOneUserById)
     .get('/users/verifyEmail/:token', email, Auth.verifyEmail)

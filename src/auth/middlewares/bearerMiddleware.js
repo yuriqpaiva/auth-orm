@@ -8,14 +8,12 @@ module.exports = (req, res, next) => {
 
     if (error && error.name === 'TokenExpiredError') {
       return res
-          .status(401)
-          .json({erro: error.message, expiradoEm: error.expiredAt});
+        .status(401)
+        .json({erro: error.message, expiredAt: error.expiredAt});
     }
 
     if (error && error.name === 'InvalidTokenByLogout') {
-      return res
-          .status(401)
-          .json({erro: error.message, expiradoEm: error.expiredAt});
+      return res.status(401).json({erro: error.message});
     }
 
     if (error) {

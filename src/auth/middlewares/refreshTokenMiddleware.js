@@ -16,10 +16,14 @@ module.exports = async (req, res, next) => {
       throw new InvalidArgument('Invalid Token');
     }
 
-    next();
+    return next();
   } catch (error) {
     if (error.name === 'InvalidArgument') {
       return res.status(401).json({error: error.message});
+    }
+
+    if (error.name === 'Error') {
+      return res.status(401).json({error: 'Please send your refresh token'})
     }
 
     return res.status(500).json({error: error.message});
