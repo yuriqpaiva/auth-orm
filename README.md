@@ -21,6 +21,13 @@ Project created aiming a basic structure of a authentication API system:
 
 <br/>
 
+## 📑 API Documentation
+After installation, while project is running, access API Documentation on path: 
+
+```/api-docs```
+
+<br/>
+
 ## 💾 How to Install Dependencies?
 
 ### Using NPM:
@@ -52,6 +59,8 @@ Project created aiming a basic structure of a authentication API system:
 ```
 
 <br/>
+
+
 
 ## ⚙️ Environment Variables
 That's how your ```.env```  file should look like:
