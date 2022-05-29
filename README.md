@@ -1,4 +1,4 @@
-# Auth-ORM &middot; ![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg) ![language](https://img.shields.io/badge/language-javascript-yellow)  ![storage](https://img.shields.io/badge/storage-redis-red)
+# Auth-ORM &middot; ![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg) ![language](https://img.shields.io/badge/language-javascript-yellow) ![storage](https://img.shields.io/badge/storage-redis-red)
 
 ## 💡 Introduction
 
@@ -22,9 +22,10 @@ Project created aiming a basic structure of a authentication API system:
 <br/>
 
 ## 📑 API Documentation
-After installation, while project is running, access API Documentation on path: 
 
-```/api-docs```
+After installation, while project is running, access API Documentation on path:
+
+`/api-docs`
 
 <br/>
 
@@ -60,27 +61,28 @@ After installation, while project is running, access API Documentation on path:
 
 <br/>
 
-
-
 ## ⚙️ Environment Variables
-That's how your ```.env```  file should look like:
+
+That's how your `.env` file should look like:
+
 ```js
-APP_PORT=3000
-BASE_URL="localhost:3000"
+APP_PORT = 3000;
+BASE_URL = 'localhost:3000';
 
-JWT_SECRET="secret-password"
+JWT_SECRET = 'secret-password';
 
-DB_USERNAME="postgres"
-DB_PASSWORD="postgres"
-DB_HOST="localhost"
-DB_DIALECT="postgresql"
+DB_USERNAME = 'postgres';
+DB_PASSWORD = 'postgres';
+DB_HOST = 'localhost';
+DB_DIALECT = 'postgresql';
 
-NODE_ENV="development"
+NODE_ENV = 'development';
 
-EMAIL_HOST="smtp.gmail.com"
-EMAIL_NAME="test@email.com"
-EMAIL_PASSWORD="test"
+EMAIL_HOST = 'smtp.gmail.com';
+EMAIL_NAME = 'test@email.com';
+EMAIL_PASSWORD = 'test';
 ```
+
 <br/>
 
 ### 🔑 Generate secure JWT Secret
@@ -88,3 +90,7 @@ EMAIL_PASSWORD="test"
 ```js
 node -e "console.log(require('crypto').randomBytes(256).toString('base64'))"
 ```
+
+## © License
+
+MIT License © Yuri Paiva
